@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./index.css";
 import ThreadList from "./components/ThreadList";
 import ThreadForm from "./components/ThreadForm";
+import PostList from "./components/PostList";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ThreadList />} />
           <Route path="/threads/new" element={<ThreadForm />} />
+          <Route path="/threads/:thread_id" element={<PostList />} />
         </Routes>
       </div>
     </Router>
