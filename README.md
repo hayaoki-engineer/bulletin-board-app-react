@@ -1,8 +1,41 @@
-# React + Vite
+# ディレクトリ構造
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+src
+├── assets                  # アセット（画像やスタイル）を格納するディレクトリ
+├── components              # 各種 React コンポーネントを格納するディレクトリ
+│   ├── PostList.jsx        # 投稿一覧を表示するコンポーネント
+│   ├── ThreadForm.jsx      # 新規スレッド作成フォームを表示するコンポーネント
+│   └── ThreadList.jsx      # スレッド一覧を表示するコンポーネント
+├── App.css                 # グローバルスタイル（Tailwind CSS の設定）
+├── App.jsx                 # アプリケーションのルートコンポーネント
+├── index.css               # 基本的な CSS スタイル（Tailwind CSS をインポート）
+└── main.jsx                # React アプリケーションのエントリポイント
 
-Currently, two official plugins are available:
+# 各ファイル・ディレクトリの説明
+- **`assets`**:
+  - アプリケーション内で使用する画像やその他のアセットファイルを格納します。
+  
+- **`components`**:
+  - 各画面（ページ）や機能ごとに分割された React コンポーネントを格納しています。
+  
+  - **`PostList.jsx`**:
+    - 特定のスレッド内の投稿を表示し、投稿の追加・削除を管理するコンポーネントです。
+  
+  - **`ThreadForm.jsx`**:
+    - 新しいスレッドを作成するためのフォームを表示するコンポーネントです。
+  
+  - **`ThreadList.jsx`**:
+    - すべてのスレッドを一覧表示し、スレッドごとに詳細画面へのリンクを提供するコンポーネントです。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **`App.css`**:
+  - Tailwind CSS をカスタマイズするためのグローバルスタイルを定義した CSS ファイルです。
+
+- **`App.jsx`**:
+  - アプリケーション全体のルーティング設定とページ表示のルートコンポーネントです。
+
+- **`index.css`**:
+  - Tailwind CSS の設定や基本的なスタイリングを定義した CSS ファイルです。
+
+- **`main.jsx`**:
+  - React のエントリポイントとなるファイルで、ReactDOM を使って `App` コンポーネントをルート DOM にマウントします。
+
