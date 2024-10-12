@@ -9,8 +9,6 @@ import {
   ThreadTitle,
 } from "./index.css.js"; // スタイルをインポート
 
-const BASE_URL = "https://railway.bulletinboard.techtrain.dev";
-
 function ThreadList() {
   const [threads, setThreads] = useState([]);
 
@@ -18,7 +16,9 @@ function ThreadList() {
     // API からスレッドデータを取得
     const fetchThreads = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/threads`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/threads`
+        );
         const data = await response.json();
         setThreads(data); // スレッドデータを state に保存
       } catch (error) {

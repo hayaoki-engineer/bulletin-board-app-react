@@ -14,8 +14,6 @@ import {
   SubmitButton,
 } from "./index.css.js"; // スタイルをインポート
 
-const BASE_URL = "https://railway.bulletinboard.techtrain.dev";
-
 function PostList() {
   const { thread_id } = useParams();
 
@@ -32,13 +30,15 @@ function PostList() {
       try {
         if (!location.state) {
           const threadResponse = await fetch(
-            `${BASE_URL}/threads/${thread_id}`
+            `${import.meta.env.VITE_API_BASE_URL}/threads/${thread_id}`
           );
           const threadData = await threadResponse.json();
           setThreadTitle(threadData.title);
         }
 
-        const response = await fetch(`${BASE_URL}/threads/${thread_id}/posts`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/threads/${thread_id}/posts`
+        );
         const data = await response.json();
         console.log("取得した投稿データ:", data); // 投稿データを確認
 
@@ -61,13 +61,16 @@ function PostList() {
 
     try {
       // 新しい投稿をAPIに送信
-      const response = await fetch(`${BASE_URL}/threads/${thread_id}/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPostData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/threads/${thread_id}/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPostData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -75,7 +78,7 @@ function PostList() {
 
       // 新しい投稿を送信後、最新の投稿一覧を再取得
       const updatedPostsResponse = await fetch(
-        `${BASE_URL}/threads/${thread_id}/posts`
+        `${import.meta.env.VITE_API_BASE_URL}/threads/${thread_id}/posts`
       );
       const updatedPosts = await updatedPostsResponse.json();
       console.log("updatedPostsの取得", updatedPosts);

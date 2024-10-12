@@ -10,8 +10,6 @@ import {
   SubmitButton,
 } from "./index.css.js";
 
-const BASE_URL = "https://railway.bulletinboard.techtrain.dev";
-
 function ThreadForm() {
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
@@ -24,13 +22,16 @@ function ThreadForm() {
     };
 
     try {
-      const response = await fetch(`${BASE_URL}/threads`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newThread),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/threads`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newThread),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
