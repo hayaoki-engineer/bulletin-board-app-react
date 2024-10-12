@@ -18,11 +18,13 @@ const BASE_URL = "https://railway.bulletinboard.techtrain.dev";
 
 function PostList() {
   const { thread_id } = useParams();
+
   const location = useLocation();
-  const [posts, setPosts] = useState([]);
   const [threadTitle, setThreadTitle] = useState(
     location?.state?.threadTitle || ""
   );
+
+  const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState("");
 
   useEffect(() => {
@@ -38,6 +40,8 @@ function PostList() {
 
         const response = await fetch(`${BASE_URL}/threads/${thread_id}/posts`);
         const data = await response.json();
+        console.log("取得した投稿データ:", data); // 投稿データを確認
+
         setPosts(data.posts || data);
       } catch (error) {
         console.error("データの取得に失敗しました:", error);
@@ -47,14 +51,16 @@ function PostList() {
     fetchPosts();
   }, [thread_id, location.state]);
 
+  // 新しい投稿をAPIに送信、投稿一覧を更新
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (newPost.trim() === "") return;
-
-    const newPostData = { body: newPost };
+    // 新しい投稿のデータ
+    const newPostData = { post: newPost };
+    console.log("newPostDataの取得", newPostData);
 
     try {
+      // 新しい投稿をAPIに送信
       const response = await fetch(`${BASE_URL}/threads/${thread_id}/posts`, {
         method: "POST",
         headers: {
@@ -67,10 +73,15 @@ function PostList() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      // 新しい投稿を送信後、最新の投稿一覧を再取得
       const updatedPostsResponse = await fetch(
         `${BASE_URL}/threads/${thread_id}/posts`
       );
       const updatedPosts = await updatedPostsResponse.json();
+      console.log("updatedPostsの取得", updatedPosts);
+      // -> {threadId: '4dfd828f-4366-431e-91df-3d8862e7e1bf', posts: Array(4)}
+
+      // スレッド内の投稿一覧を更新
       setPosts(updatedPosts.posts || updatedPosts);
       setNewPost("");
     } catch (error) {
@@ -86,10 +97,10 @@ function PostList() {
       </BackLink>
       <PostContainer>
         {posts.length > 0 ? (
-          posts.map((post, index) => (
-            <PostItem key={index}>
+          posts.map((post) => (
+            <PostItem key={post.id}>
               <PostText>
-                {post.body || post.post || "内容がありません"}
+                {post.post || "内容がありません"}
               </PostText>
             </PostItem>
           ))
